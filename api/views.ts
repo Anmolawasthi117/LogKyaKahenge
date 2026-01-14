@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // Support both Vercel KV and Upstash Redis (must be REST API URLs starting with https://)
-const rawUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
-const rawToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
+const rawUrl = process.env.UPSTASH_REDIS_REST_URL || '';
+const rawToken = process.env.UPSTASH_REDIS_REST_TOKEN || '';
 
 // Validate that URL is actually an HTTPS REST API URL (not redis:// protocol)
 const isValidRestUrl = rawUrl.startsWith('https://');
