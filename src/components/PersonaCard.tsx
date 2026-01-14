@@ -11,34 +11,59 @@ export function PersonaCard({ persona, index }: PersonaCardProps) {
   const { selectedPersona, setSelectedPersona } = useAppStore();
   const isSelected = selectedPersona === persona.id;
 
+  // Different accent colors for each persona
+  const accentColors = {
+    'khadoos-baap': 'bg-orange-500',
+    'desi-aunty': 'bg-pink-500',
+    'gen-z-kid': 'bg-green-500',
+    'therapist': 'bg-blue-500',
+  };
+
+  const glowColors = {
+    'khadoos-baap': 'rgba(249, 115, 22, 0.4)',
+    'desi-aunty': 'rgba(236, 72, 153, 0.4)',
+    'gen-z-kid': 'rgba(34, 197, 94, 0.4)',
+    'therapist': 'rgba(59, 130, 246, 0.4)',
+  };
+
   return (
     <motion.button
       onClick={() => setSelectedPersona(isSelected ? null : persona.id)}
       className={`
-        relative w-full text-left p-6 border-4 border-ink-black
-        transition-all duration-200 cursor-pointer group
+        relative w-full text-left p-6 rounded-2xl cursor-pointer group
+        transition-all duration-300 overflow-hidden
         ${isSelected 
-          ? 'bg-ink-black text-old-paper shadow-none translate-x-1 translate-y-1' 
-          : 'bg-old-paper text-charcoal shadow-[6px_6px_0px_#1A1A1A] hover:shadow-[4px_4px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px]'
+          ? 'bg-bg-card-hover border-2' 
+          : 'bg-bg-glass border border-border hover:border-border-hover'
         }
       `}
+      style={{
+        borderColor: isSelected ? glowColors[persona.id] : undefined,
+        boxShadow: isSelected ? `0 0 40px ${glowColors[persona.id]}` : undefined,
+      }}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ 
         duration: 0.4, 
         delay: index * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.22, 1, 0.36, 1]
       }}
       whileHover={{ 
-        rotate: isSelected ? 0 : [-0.5, 0.5, -0.5, 0],
-        transition: { duration: 0.3 }
+        y: -4,
+        transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
     >
+      {/* Gradient overlay on hover/selected */}
+      <motion.div
+        className={`absolute inset-0 ${accentColors[persona.id]} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-2xl`}
+        animate={{ opacity: isSelected ? 0.1 : 0 }}
+      />
+
       {/* Selection Indicator */}
       {isSelected && (
         <motion.div
-          className="absolute -top-3 -right-3 w-8 h-8 bg-saffron border-3 border-ink-black rounded-full flex items-center justify-center text-ink-black font-bold text-sm"
+          className={`absolute top-4 right-4 w-8 h-8 ${accentColors[persona.id]} rounded-full flex items-center justify-center text-white font-bold text-sm`}
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 500, damping: 20 }}
@@ -47,75 +72,53 @@ export function PersonaCard({ persona, index }: PersonaCardProps) {
         </motion.div>
       )}
 
-      {/* Decorative Corner */}
-      <div 
-        className="absolute top-0 right-0 w-12 h-12"
-        style={{ 
-          background: persona.bgGradient,
-          clipPath: 'polygon(100% 0, 0 0, 100% 100%)'
-        }}
-      />
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Icon & Title */}
+        <div className="flex items-start gap-4 mb-4">
+          <motion.div 
+            className={`w-14 h-14 rounded-xl ${accentColors[persona.id]} flex items-center justify-center text-3xl`}
+            animate={isSelected ? { 
+              scale: [1, 1.1, 1],
+            } : {}}
+            transition={{ duration: 0.3 }}
+          >
+            {persona.icon}
+          </motion.div>
+          
+          <div className="flex-1 min-w-0">
+            <h3 className={`font-display font-bold text-lg ${isSelected ? 'text-text-primary' : 'text-text-primary'}`}>
+              {persona.name}
+            </h3>
+            <p className="text-sm text-text-muted">
+              {persona.nameHindi}
+            </p>
+          </div>
+        </div>
 
-      {/* Icon & Title */}
-      <div className="flex items-start gap-4 mb-4">
-        <motion.span 
-          className="text-5xl"
-          animate={isSelected ? { 
-            scale: [1, 1.2, 1],
-            rotate: [0, 10, -10, 0]
-          } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          {persona.icon}
-        </motion.span>
-        
-        <div className="flex-1 min-w-0">
-          <h3 className={`
-            font-headline font-bold text-xl leading-tight
-            ${isSelected ? 'text-saffron' : 'text-charcoal'}
-          `}>
-            {persona.name}
-          </h3>
-          <p className={`
-            text-xs font-body opacity-70 mt-0.5
-            ${isSelected ? 'text-old-paper' : 'text-charcoal'}
-          `}>
-            {persona.nameHindi}
-          </p>
+        {/* Description */}
+        <p className="text-sm text-text-secondary leading-relaxed mb-4">
+          {persona.description}
+        </p>
+
+        {/* Vibe Tags */}
+        <div className="flex flex-wrap gap-2">
+          {persona.vibe.split(', ').map((tag, i) => (
+            <span
+              key={i}
+              className={`
+                inline-block px-2.5 py-1 text-xs font-medium uppercase tracking-wider rounded-full
+                ${isSelected 
+                  ? 'bg-text-primary/10 text-text-primary' 
+                  : 'bg-bg-glass text-text-muted border border-border'
+                }
+              `}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
-
-      {/* Description */}
-      <p className={`
-        text-sm font-body leading-relaxed mb-4
-        ${isSelected ? 'text-old-paper/90' : 'text-charcoal/80'}
-      `}>
-        {persona.description}
-      </p>
-
-      {/* Vibe Tag */}
-      <div className="flex flex-wrap gap-2">
-        {persona.vibe.split(', ').map((tag, i) => (
-          <span
-            key={i}
-            className={`
-              inline-block px-2 py-1 text-xs font-body font-medium uppercase tracking-wider
-              border-2 border-current
-              ${isSelected ? 'border-old-paper/50 text-old-paper/80' : 'border-charcoal/30 text-charcoal/70'}
-            `}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Hover Decoration */}
-      <motion.div
-        className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-        initial={false}
-      >
-        <span className="text-2xl">{isSelected ? '🔥' : '👆'}</span>
-      </motion.div>
     </motion.button>
   );
 }

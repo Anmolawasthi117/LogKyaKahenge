@@ -60,20 +60,25 @@ export function BurnMeter({ progress, isAnimating = true }: BurnMeterProps) {
         <path
           d="M 20 100 A 80 80 0 0 1 180 100"
           fill="none"
-          stroke="#2D3436"
+          stroke="rgba(255, 255, 255, 0.1)"
           strokeWidth="12"
           strokeLinecap="round"
-          opacity="0.2"
         />
 
-        {/* Gradient Definition */}
+        {/* Gradient Definition - now solid */}
         <defs>
           <linearGradient id="burnGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#00B894" />
-            <stop offset="33%" stopColor="#FDCB6E" />
-            <stop offset="66%" stopColor="#FF4D00" />
-            <stop offset="100%" stopColor="#D63031" />
+            <stop offset="0%" stopColor="#00D9FF" />
+            <stop offset="50%" stopColor="#FF3366" />
+            <stop offset="100%" stopColor="#FF6B35" />
           </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
 
         {/* Progress Arc */}
@@ -87,7 +92,7 @@ export function BurnMeter({ progress, isAnimating = true }: BurnMeterProps) {
           initial={{ strokeDashoffset: 251.2 }}
           animate={{ strokeDashoffset: 251.2 - (animatedProgress / 100) * 251.2 }}
           transition={{ duration: 0.1 }}
-          className={animatedProgress > 75 ? 'burn-glow' : ''}
+          filter={animatedProgress > 75 ? 'url(#glow)' : ''}
         />
 
         {/* Scale Marks */}
@@ -107,9 +112,8 @@ export function BurnMeter({ progress, isAnimating = true }: BurnMeterProps) {
               y1={y1}
               x2={x2}
               y2={y2}
-              stroke="#2D3436"
+              stroke="rgba(255, 255, 255, 0.3)"
               strokeWidth="2"
-              opacity="0.5"
             />
           );
         })}
@@ -122,9 +126,9 @@ export function BurnMeter({ progress, isAnimating = true }: BurnMeterProps) {
         >
           <polygon
             points="100,40 95,100 105,100"
-            fill="#1A1A1A"
+            fill="#FF3366"
           />
-          <circle cx="100" cy="100" r="8" fill="#FF4D00" stroke="#1A1A1A" strokeWidth="3" />
+          <circle cx="100" cy="100" r="8" fill="#FF3366" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="2" />
         </motion.g>
       </svg>
 
@@ -138,11 +142,13 @@ export function BurnMeter({ progress, isAnimating = true }: BurnMeterProps) {
       >
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-2xl">{currentLevel.emoji}</span>
-          <span className="font-headline font-bold text-lg text-charcoal">
+          <span 
+            className="font-display font-bold text-lg text-accent-pink"
+          >
             {Math.round(animatedProgress)}%
           </span>
         </div>
-        <p className="font-body font-medium text-sm text-charcoal">
+        <p className="font-body font-medium text-sm text-text-secondary">
           {savageTitle || currentLevel.label}
         </p>
       </motion.div>

@@ -10,12 +10,12 @@ export function PersonaPage() {
   const { selectedPersona } = useAppStore();
 
   return (
-    <div className="min-h-screen bg-old-paper py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen py-8 px-4">
+      <div className="max-w-5xl mx-auto">
         {/* Back Button */}
         <motion.button
           onClick={() => navigate('/')}
-          className="mb-8 flex items-center gap-2 px-4 py-2 border-2 border-ink-black bg-old-paper shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-headline font-bold text-sm"
+          className="mb-8 flex items-center gap-2 px-4 py-2 bg-bg-glass border border-border rounded-lg hover:border-border-hover transition-all font-display font-semibold text-sm text-text-secondary hover:text-text-primary"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
         >
@@ -31,14 +31,14 @@ export function PersonaPage() {
           transition={{ delay: 0.1 }}
         >
           <div className="inline-block mb-4">
-            <div className="px-4 py-2 bg-saffron border-3 border-ink-black font-headline font-bold text-sm uppercase tracking-widest shadow-[3px_3px_0px_#1A1A1A]">
+            <div className="px-4 py-2 bg-accent-pink rounded-full font-display font-semibold text-sm uppercase tracking-widest text-white">
               Step 1 of 3
             </div>
           </div>
-          <h1 className="font-headline font-extrabold text-4xl md:text-5xl text-charcoal mb-4">
-            Choose Your <span className="text-saffron">Roaster</span>
+          <h1 className="font-display font-black text-4xl md:text-5xl text-text-primary mb-4">
+            Choose Your <span className="text-accent-pink">Roaster</span>
           </h1>
-          <p className="font-body text-lg text-charcoal/70 max-w-xl mx-auto">
+          <p className="font-body text-lg text-text-secondary max-w-xl mx-auto">
             Each persona has a unique style of destroying your self-esteem. Choose wisely.
           </p>
         </motion.div>
@@ -52,7 +52,7 @@ export function PersonaPage() {
 
         {/* Continue Button */}
         <motion.div
-          className="flex justify-center"
+          className="flex flex-col items-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -61,29 +61,32 @@ export function PersonaPage() {
             onClick={() => navigate('/evidence')}
             disabled={!selectedPersona}
             className={`
-              group flex items-center gap-3 px-10 py-5 border-4 border-ink-black font-headline font-bold text-xl uppercase tracking-wider transition-all
+              group flex items-center gap-3 px-10 py-5 rounded-xl font-display font-bold text-lg transition-all
               ${selectedPersona 
-                ? 'bg-saffron shadow-[6px_6px_0px_#1A1A1A] hover:shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] cursor-pointer' 
-                : 'bg-charcoal/20 text-charcoal/50 cursor-not-allowed shadow-none'
+                ? 'bg-accent-pink text-white cursor-pointer' 
+                : 'bg-bg-glass text-text-muted cursor-not-allowed border border-border'
               }
             `}
-            whileHover={selectedPersona ? { scale: 1.02 } : {}}
+            style={{
+              boxShadow: selectedPersona ? '0 0 40px rgba(255, 51, 102, 0.3)' : 'none',
+            }}
+            whileHover={selectedPersona ? { scale: 1.02, boxShadow: '0 0 60px rgba(255, 51, 102, 0.4)' } : {}}
             whileTap={selectedPersona ? { scale: 0.98 } : {}}
           >
             Continue
             <ArrowRight className={`w-5 h-5 transition-transform ${selectedPersona ? 'group-hover:translate-x-2' : ''}`} />
           </motion.button>
-        </motion.div>
 
-        {!selectedPersona && (
-          <motion.p
-            className="text-center mt-4 text-sm text-charcoal/60 font-body"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            👆 Select a persona to continue
-          </motion.p>
-        )}
+          {!selectedPersona && (
+            <motion.p
+              className="text-sm text-text-muted"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              👆 Select a persona to continue
+            </motion.p>
+          )}
+        </motion.div>
       </div>
     </div>
   );

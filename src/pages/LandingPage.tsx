@@ -1,200 +1,209 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Flame, Zap, Users, ArrowRight } from 'lucide-react';
+import { ArrowRight, Skull, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Header } from '../components/Header';
 
 export function LandingPage() {
   const navigate = useNavigate();
   const [humbledCount, setHumbledCount] = useState(42069);
+  const [isHovering, setIsHovering] = useState(false);
 
   // Simulate real-time counter
   useEffect(() => {
     const interval = setInterval(() => {
-      setHumbledCount(prev => prev + Math.floor(Math.random() * 3));
-    }, 5000);
+      setHumbledCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="min-h-screen bg-old-paper relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Floating emojis */}
-        {['🔥', '💀', '😭', '🌶️', '👨‍👦', '👵', '🧒', '🧠'].map((emoji, i) => (
-          <motion.span
-            key={i}
-            className="absolute text-4xl opacity-20"
-            style={{
-              left: `${10 + (i * 12)}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 3 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {emoji}
-          </motion.span>
-        ))}
-      </div>
-
+    <div className="min-h-screen bg-bg-dark relative overflow-hidden">
+      {/* Header */}
+      <Header />
+      
+      {/* Animated Background */}
+      <div className="absolute inset-0 animated-gradient" />
+      <div className="absolute inset-0 bg-grid opacity-20" />
+      
+      {/* Red glow at top for intensity */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent-pink/20 blur-[150px] rounded-full" />
+      
       {/* Main Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 min-h-screen flex flex-col justify-center">
-        {/* Badge */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-between px-4 py-8 md:py-12">
+        {/* Top Section - Warning Badge */}
         <motion.div
-          className="flex justify-center mb-8"
+          className="flex justify-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-mustard border-3 border-ink-black font-headline font-bold text-sm uppercase tracking-widest shadow-[4px_4px_0px_#1A1A1A]">
-            <span>🇮🇳</span>
-            <span>Proudly Desi Roasts</span>
-            <span>🌶️</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent-pink/10 border border-accent-pink/30 rounded-full">
+            <Skull className="w-4 h-4 text-accent-pink" />
+            <span className="text-sm font-semibold text-accent-pink uppercase tracking-wider">No Mercy Mode</span>
           </div>
         </motion.div>
 
-        {/* Hero Headline */}
-        <motion.div
-          className="text-center mb-8"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          <h1 className="font-headline font-extrabold text-6xl md:text-8xl text-charcoal leading-none mb-4">
-            Get{' '}
-            <span className="relative inline-block">
-              <span className="text-saffron">Humbled</span>
-              <motion.span
-                className="absolute -bottom-2 left-0 right-0 h-2 bg-saffron"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-              />
-            </span>
-            {' '}by AI
-          </h1>
-          <p className="font-body text-xl md:text-2xl text-charcoal/70 max-w-2xl mx-auto">
-            Hand us your digital footprint. Our Desi personas will expose your life choices 
-            with the warmth of a disappointed Indian parent.
-          </p>
-        </motion.div>
-
-        {/* Humbled Counter */}
-        <motion.div
-          className="flex justify-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <div className="card-brutal inline-flex items-center gap-6 px-8 py-4">
-            <div className="flex items-center gap-2">
-              <Users className="w-6 h-6 text-saffron" />
-              <span className="font-headline text-sm uppercase tracking-wider text-charcoal/60">
-                Souls Humbled
-              </span>
-            </div>
-            <motion.div
-              className="font-headline font-extrabold text-4xl text-saffron"
-              key={humbledCount}
-              initial={{ scale: 1.2, color: '#D63031' }}
-              animate={{ scale: 1, color: '#FF4D00' }}
-              transition={{ duration: 0.3 }}
-            >
-              {humbledCount.toLocaleString()}
-            </motion.div>
-            <motion.div
-              className="w-3 h-3 bg-parrot-green rounded-full"
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 1 }}
-            />
-          </div>
-        </motion.div>
-
-        {/* Features */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-4 mb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { icon: <Flame className="w-5 h-5" />, text: '4 Brutal Personas' },
-            { icon: <Zap className="w-5 h-5" />, text: '6 Platform Support' },
-            { icon: '🤖', text: 'AI-Powered Roasts' },
-          ].map((feature, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 px-4 py-2 bg-old-paper-dark border-2 border-ink-black font-body font-medium"
-            >
-              {typeof feature.icon === 'string' ? (
-                <span>{feature.icon}</span>
-              ) : (
-                <span className="text-saffron">{feature.icon}</span>
-              )}
-              <span>{feature.text}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* CTA Button */}
-        <motion.div
-          className="flex justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <motion.button
-            onClick={() => navigate('/persona')}
-            className="group relative px-12 py-6 bg-saffron border-4 border-ink-black font-headline font-bold text-2xl uppercase tracking-wider shadow-[8px_8px_0px_#1A1A1A] hover:shadow-[4px_4px_0px_#1A1A1A] hover:translate-x-1 hover:translate-y-1 transition-all"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+        {/* Center Section - Hero */}
+        <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto text-center py-8 md:py-16">
+          {/* Main Headline - THE HOOK */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="flex items-center gap-4">
-              <span>🎯</span>
-              Pick Your Poison
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </span>
-          </motion.button>
-        </motion.div>
+            <h1 className="font-display font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight mb-6">
+              <span className="text-text-primary">We will</span>
+              <br />
+              <span className="text-accent-pink">destroy</span>
+              <span className="text-text-primary"> your</span>
+              <br />
+              <span className="text-text-primary">ego.</span>
+            </h1>
+          </motion.div>
 
-        {/* Persona Preview */}
-        <motion.div
-          className="mt-16 flex justify-center gap-4 flex-wrap"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-        >
-          {['👨‍👦', '👵', '🧒', '🧠'].map((emoji, i) => (
-            <motion.div
-              key={i}
-              className="w-16 h-16 bg-old-paper border-3 border-ink-black flex items-center justify-center text-3xl shadow-[3px_3px_0px_#1A1A1A]"
-              whileHover={{ 
-                y: -10, 
-                rotate: [-5, 5, -5, 0],
-                transition: { duration: 0.3 }
+          {/* Subheadline - More aggressive */}
+          <motion.p
+            className="text-lg md:text-xl text-text-secondary max-w-xl mx-auto mb-4 px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            Give us your GitHub, LeetCode, or Chess.com. 
+            Our AI personas will tear apart everything you thought was impressive.
+          </motion.p>
+
+          {/* Warning text */}
+          <motion.p
+            className="text-sm text-accent-pink/80 mb-10 font-medium"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            ⚠️ This will hurt. Proceed anyway?
+          </motion.p>
+
+          {/* CTA Button - THE MAGNET */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <motion.button
+              onClick={() => navigate('/persona')}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              className="group relative px-8 py-5 md:px-12 md:py-6 bg-accent-pink rounded-2xl font-display font-bold text-lg md:text-xl text-white cursor-pointer overflow-hidden"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                boxShadow: isHovering 
+                  ? '0 0 60px rgba(255, 51, 102, 0.6)' 
+                  : '0 0 40px rgba(255, 51, 102, 0.4)',
               }}
             >
-              {emoji}
-            </motion.div>
-          ))}
-        </motion.div>
+              {/* Shimmer effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              />
+              
+              <span className="relative flex items-center gap-3">
+                <span>Roast Me</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </motion.button>
+          </motion.div>
 
-        {/* Disclaimer */}
-        <motion.p
-          className="text-center mt-12 text-sm text-charcoal/50 font-body"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
+          {/* Persona preview - more menacing */}
+          <motion.div
+            className="flex flex-wrap justify-center gap-3 mt-10 px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            <p className="w-full text-xs text-text-muted uppercase tracking-wider mb-2">Your executioners await</p>
+            {[
+              { icon: '👨‍👦', label: 'Strict Dad' },
+              { icon: '👵', label: 'Nosy Aunty' },
+              { icon: '🧒', label: 'Gen Z' },
+              { icon: '🧠', label: 'Therapist' },
+            ].map((persona, i) => (
+              <motion.div
+                key={i}
+                className="flex items-center gap-2 px-3 py-2 bg-bg-glass backdrop-blur-sm border border-border rounded-lg"
+                whileHover={{ scale: 1.05, borderColor: 'rgba(255, 51, 102, 0.3)' }}
+              >
+                <span className="text-xl">{persona.icon}</span>
+                <span className="text-sm text-text-secondary hidden sm:inline">{persona.label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottom Section - Humbled Counter + Stats */}
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
         >
-          ⚠️ Side effects may include: existential crisis, calling your parents, 
-          and reconsidering your life choices.
-        </motion.p>
+          {/* Humbled Counter - Social Proof */}
+          <div className="flex justify-center">
+            <motion.div 
+              className="inline-flex items-center gap-4 md:gap-6 px-6 py-4 bg-bg-glass backdrop-blur-xl border border-border rounded-2xl"
+              whileHover={{ borderColor: 'rgba(255, 51, 102, 0.3)' }}
+            >
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-accent-pink" />
+                <span className="text-sm font-medium text-text-secondary uppercase tracking-wide">
+                  Egos Crushed
+                </span>
+              </div>
+              
+              <motion.div
+                className="font-display font-black text-3xl md:text-4xl text-accent-pink"
+                key={humbledCount}
+                initial={{ scale: 1.1 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {humbledCount.toLocaleString()}
+              </motion.div>
+              
+              {/* Live indicator */}
+              <div className="flex items-center gap-2">
+                <motion.div
+                  className="w-2 h-2 bg-accent-green rounded-full"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [1, 0.7, 1],
+                  }}
+                  transition={{ 
+                    duration: 1.5, 
+                    repeat: Infinity,
+                    ease: "easeInOut" 
+                  }}
+                  style={{ boxShadow: '0 0 10px #00FF88' }}
+                />
+                <span className="text-xs text-text-muted uppercase tracking-wider hidden md:inline">Live</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Brutal taglines */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-text-muted text-sm">
+            <span>💀 Brutally Honest</span>
+            <span>🔥 No Filter</span>
+            <span>😭 100% Accurate</span>
+          </div>
+
+          {/* Disclaimer - more intense */}
+          <p className="text-center text-xs text-text-muted px-4">
+            Side effects include: questioning your life choices, existential dread, and an urge to delete your accounts.
+          </p>
+        </motion.div>
       </div>
     </div>
   );

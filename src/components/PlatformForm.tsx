@@ -88,13 +88,13 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
   return (
     <motion.div
       className={`
-        relative p-4 border-3 border-ink-black transition-all duration-200
+        relative p-4 rounded-xl transition-all duration-200 border
         ${isEnabled 
-          ? 'bg-old-paper shadow-[4px_4px_0px_#1A1A1A]' 
-          : 'bg-old-paper/50 opacity-60'
+          ? 'bg-bg-glass border-border' 
+          : 'bg-bg-card/30 border-transparent opacity-60'
         }
-        ${isVerified ? 'border-parrot-green' : ''}
-        ${error ? 'border-flame-red' : ''}
+        ${isVerified ? 'border-accent-green/50' : ''}
+        ${error ? 'border-red-500/50' : ''}
       `}
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
@@ -109,18 +109,22 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
         >
           <motion.div
             className={`
-              w-6 h-6 border-2 border-ink-black flex items-center justify-center
-              transition-colors
-              ${platform.comingSoon ? 'bg-charcoal/20 cursor-not-allowed' : isEnabled ? 'bg-saffron cursor-pointer' : 'bg-old-paper cursor-pointer'}
+              w-6 h-6 rounded-md flex items-center justify-center border transition-colors
+              ${platform.comingSoon 
+                ? 'bg-bg-card border-border cursor-not-allowed' 
+                : isEnabled 
+                  ? 'bg-accent-pink border-transparent cursor-pointer' 
+                  : 'bg-bg-glass border-border cursor-pointer'
+              }
             `}
             whileHover={platform.comingSoon ? {} : { scale: 1.1 }}
             whileTap={platform.comingSoon ? {} : { scale: 0.9 }}
           >
-            {isEnabled && !platform.comingSoon && <Check className="w-4 h-4 text-ink-black" strokeWidth={3} />}
+            {isEnabled && !platform.comingSoon && <Check className="w-4 h-4 text-white" strokeWidth={3} />}
           </motion.div>
           
           <span className="text-2xl">{platform.icon}</span>
-          <span className={`font-headline font-bold text-lg ${platform.comingSoon ? 'text-charcoal/50' : 'text-charcoal group-hover:text-saffron'} transition-colors`}>
+          <span className={`font-display font-bold text-lg ${platform.comingSoon ? 'text-text-muted' : 'text-text-primary group-hover:text-accent-pink'} transition-colors`}>
             {platform.name}
           </span>
         </button>
@@ -132,7 +136,7 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="flex items-center gap-1 px-2 py-1 bg-mustard text-ink-black text-xs font-bold border-2 border-ink-black"
+              className="flex items-center gap-1 px-2 py-1 bg-accent-orange/20 text-accent-orange text-xs font-semibold rounded-full"
             >
               🚀 Coming Soon
             </motion.div>
@@ -142,7 +146,7 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="flex items-center gap-1 px-2 py-1 bg-parrot-green text-ink-black text-xs font-bold border-2 border-ink-black"
+              className="flex items-center gap-1 px-2 py-1 bg-accent-green/20 text-accent-green text-xs font-semibold rounded-full"
             >
               <Check className="w-3 h-3" /> Verified
             </motion.div>
@@ -152,7 +156,7 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="flex items-center gap-1 px-2 py-1 bg-flame-red text-white text-xs font-bold border-2 border-ink-black"
+              className="flex items-center gap-1 px-2 py-1 bg-red-500/20 text-red-400 text-xs font-semibold rounded-full"
             >
               <AlertCircle className="w-3 h-3" /> Error
             </motion.div>
@@ -177,17 +181,21 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
               placeholder={platform.placeholder}
               disabled={isLoading || isVerified}
               className={`
-                input-brutal w-full text-sm
-                ${isVerified ? 'bg-parrot-green/10' : ''}
-                ${error ? 'border-flame-red' : ''}
+                w-full px-4 py-3 rounded-lg text-sm font-body
+                bg-bg-card border border-border text-text-primary
+                placeholder:text-text-muted
+                focus:outline-none focus:border-accent-pink focus:ring-2 focus:ring-accent-pink/20
+                transition-all
+                ${isVerified ? 'bg-accent-green/10 border-accent-green/30' : ''}
+                ${error ? 'border-red-500/50' : ''}
               `}
             />
             {isVerified && (
               <button
                 onClick={handleClear}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-flame-red/20 rounded"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-red-500/20 rounded-md transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4 text-text-muted" />
               </button>
             )}
           </div>
@@ -196,14 +204,16 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
             onClick={handleVerify}
             disabled={isLoading || !username.trim() || isVerified}
             className={`
-              px-4 py-2 font-headline font-bold text-sm uppercase
-              border-3 border-ink-black transition-all
+              px-4 py-2 font-display font-semibold text-sm rounded-lg transition-all
               ${isVerified 
-                ? 'bg-parrot-green text-ink-black cursor-not-allowed' 
-                : 'bg-saffron text-ink-black shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px]'
+                ? 'bg-accent-green text-white cursor-not-allowed' 
+                : 'bg-accent-pink text-white hover:opacity-90'
               }
               disabled:opacity-50 disabled:cursor-not-allowed
             `}
+            style={{
+              boxShadow: !isVerified && !isLoading ? '0 0 20px rgba(255, 51, 102, 0.3)' : 'none',
+            }}
             whileHover={!isVerified && !isLoading ? { scale: 1.02 } : {}}
             whileTap={!isVerified && !isLoading ? { scale: 0.98 } : {}}
           >
@@ -225,18 +235,18 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="mt-3 flex items-center gap-3 p-2 bg-ink-black/5 border border-ink-black/20"
+            className="mt-3 flex items-center gap-3 p-3 bg-bg-card border border-border rounded-lg"
           >
             <img 
               src={data.avatar as string} 
               alt="Profile" 
-              className="w-10 h-10 border-2 border-ink-black object-cover"
+              className="w-10 h-10 rounded-lg object-cover"
             />
             <div className="flex-1 min-w-0">
-              <p className="font-body font-medium text-sm text-charcoal truncate">
+              <p className="font-body font-medium text-sm text-text-primary truncate">
                 {'name' in data ? (data.name as string) : username}
               </p>
-              <p className="text-xs text-charcoal/60">@{username}</p>
+              <p className="text-xs text-text-muted">@{username}</p>
             </div>
           </motion.div>
         )}
@@ -249,7 +259,7 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="mt-2 text-xs text-flame-red font-body"
+            className="mt-2 text-xs text-red-400 font-body"
           >
             {error}
           </motion.p>
@@ -274,19 +284,19 @@ export function PlatformForm() {
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="font-headline font-bold text-2xl text-charcoal">
-            The Evidence Locker 📁
+          <h2 className="font-display font-bold text-xl text-text-primary">
+            Your Digital Footprint 👣
           </h2>
-          <p className="text-sm text-charcoal/70 font-body mt-1">
+          <p className="text-sm text-text-secondary font-body mt-1">
             Add your profiles. The more you add, the harder we roast.
           </p>
         </div>
         
         <div className="text-right">
-          <div className="text-3xl font-headline font-extrabold text-saffron">
+          <div className="text-3xl font-display font-extrabold text-accent-pink">
             {enabledPlatforms.length}
           </div>
-          <div className="text-xs text-charcoal/60 uppercase tracking-wider">
+          <div className="text-xs text-text-muted uppercase tracking-wider">
             platforms
           </div>
         </div>

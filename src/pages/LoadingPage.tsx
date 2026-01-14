@@ -15,7 +15,7 @@ const LOADING_MESSAGES = {
     "Reading your README files... if they exist.",
   ],
   leetcode: [
-    "Checking your LeetCode... why so many 'Easy' problems, beta?",
+    "Checking your LeetCode... why so many 'Easy' problems?",
     "Looking at your acceptance rate... ouch.",
     "Counting the Hard problems you avoided...",
     "Reviewing your solutions... brute force, huh?",
@@ -33,14 +33,14 @@ const LOADING_MESSAGES = {
     "Analyzing the subreddits you follow... interesting taste.",
   ],
   general: [
-    "Grandpa is putting on his glasses to judge you...",
-    "Aunty is warming up her disappointment...",
     "Loading maximum embarrassment protocol...",
     "Preparing weapons-grade honesty...",
     "Consulting with the council of disapproval...",
     "Calibrating the roast-o-meter...",
     "Gathering all the evidence against you...",
     "Preparing to destroy your self-esteem...",
+    "AI is warming up its savage mode...",
+    "Generating personalized destruction...",
   ],
 };
 
@@ -103,9 +103,10 @@ export function LoadingPage() {
 
         setProgress(100);
 
-        // Create roast result
+        // Create roast result with random burn level 90-100
         const sentences = fullText.split(/[.!?]/).filter(s => s.trim().length > 20);
         const signatureLine = sentences[Math.floor(sentences.length / 2)]?.trim() || 'You got roasted!';
+        const burnLevel = Math.floor(Math.random() * 11) + 90;
 
         const roastResult = {
           id: Date.now().toString(),
@@ -113,7 +114,7 @@ export function LoadingPage() {
           platforms: verifiedPlatforms,
           roastText: fullText,
           signatureLine,
-          burnLevel: 100,
+          burnLevel,
           createdAt: new Date(),
           userAvatars: Object.values(platformData)
             .filter((d): d is NonNullable<typeof d> => d !== undefined && d !== null && typeof d === 'object' && 'avatar' in d && typeof (d as { avatar?: string }).avatar === 'string')
@@ -138,8 +139,11 @@ export function LoadingPage() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="min-h-screen bg-ink-black flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full text-center">
+    <div className="min-h-screen bg-bg-dark flex items-center justify-center p-4">
+      {/* Background effects */}
+      <div className="fixed inset-0 bg-glow pointer-events-none" />
+      
+      <div className="max-w-2xl w-full text-center relative z-10">
         {/* Persona Icon */}
         {persona && (
           <motion.div
@@ -153,7 +157,14 @@ export function LoadingPage() {
               repeat: Infinity,
             }}
           >
-            <span className="text-8xl">{persona.icon}</span>
+            <div 
+              className="inline-block text-8xl p-4"
+              style={{ 
+                filter: 'drop-shadow(0 0 30px rgba(255, 51, 102, 0.5))',
+              }}
+            >
+              {persona.icon}
+            </div>
           </motion.div>
         )}
 
@@ -166,41 +177,48 @@ export function LoadingPage() {
             exit={{ opacity: 0, y: -20 }}
             className="mb-8"
           >
-            <p className="font-headline font-bold text-2xl md:text-3xl text-old-paper">
+            <p className="font-display font-bold text-xl md:text-2xl text-text-primary px-4">
               {currentMessage}
             </p>
           </motion.div>
         </AnimatePresence>
 
         {/* Progress Bar */}
-        <div className="relative mb-8">
-          <div className="h-4 bg-charcoal border-2 border-old-paper/30 overflow-hidden">
+        <div className="relative mb-8 px-8">
+          <div className="h-3 bg-bg-glass rounded-full overflow-hidden border border-border">
             <motion.div
-              className="h-full bg-gradient-to-r from-saffron via-flame-red to-saffron"
+              className="h-full bg-accent-pink"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.3 }}
+              style={{
+                boxShadow: '0 0 20px rgba(255, 51, 102, 0.5)',
+              }}
             />
           </div>
-          <div className="mt-2 font-body text-old-paper/70">
-            {Math.round(progress)}% - {isComplete ? 'Complete!' : 'Generating roast...'}
+          <div className="mt-3 font-body text-text-secondary text-sm">
+            {Math.round(progress)}% — {isComplete ? 'Complete!' : 'Generating roast...'}
           </div>
         </div>
 
-        {/* Loading Spinner */}
+        {/* Loading Dots */}
         {!isComplete && (
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-3">
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-4 h-4 bg-saffron"
+                className="w-3 h-3 rounded-full bg-accent-pink"
                 animate={{
-                  y: [0, -20, 0],
+                  y: [0, -15, 0],
+                  opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 0.6,
+                  duration: 0.8,
                   repeat: Infinity,
-                  delay: i * 0.1,
+                  delay: i * 0.15,
+                }}
+                style={{
+                  boxShadow: '0 0 10px rgba(255, 51, 102, 0.5)',
                 }}
               />
             ))}
@@ -212,7 +230,10 @@ export function LoadingPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="font-headline font-bold text-3xl text-parrot-green"
+            className="font-display font-bold text-2xl text-accent-green"
+            style={{
+              textShadow: '0 0 20px rgba(0, 255, 136, 0.5)',
+            }}
           >
             ✅ Roast Ready!
           </motion.div>

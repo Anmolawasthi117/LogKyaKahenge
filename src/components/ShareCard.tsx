@@ -79,41 +79,42 @@ Get your roast at: logkyakahenge.com
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-black/70"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-bg-darker/90 backdrop-blur-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
-        className="relative w-full max-w-lg bg-old-paper border-4 border-ink-black shadow-[8px_8px_0px_#1A1A1A]"
+        className="relative w-full max-w-lg bg-bg-dark border border-border rounded-2xl overflow-hidden"
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
+        style={{ boxShadow: '0 0 60px rgba(255, 51, 102, 0.2)' }}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-4 w-10 h-10 bg-flame-red border-3 border-ink-black flex items-center justify-center text-white hover:bg-saffron transition-colors"
+          className="absolute top-4 right-4 w-10 h-10 bg-bg-glass border border-border rounded-lg flex items-center justify-center text-text-muted hover:text-text-primary hover:border-border-hover transition-all z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
-        <div className="bg-ink-black text-old-paper px-6 py-4">
+        <div className="bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 border-b border-border px-6 py-5">
           <div className="flex items-center gap-3">
             <span className="text-3xl">{persona.icon}</span>
             <div>
-              <h2 className="font-headline font-bold text-xl">Share Your Roast</h2>
-              <p className="text-xs opacity-70">Spread the humiliation</p>
+              <h2 className="font-display font-bold text-xl text-text-primary">Share Your Roast</h2>
+              <p className="text-xs text-text-muted">Spread the humiliation</p>
             </div>
           </div>
         </div>
 
         {/* Preview Card */}
         <div className="p-6">
-          <div className="bg-white border-3 border-ink-black p-4 mb-6">
+          <div className="bg-bg-glass border border-border rounded-xl p-4 mb-6">
             {/* User Avatars */}
             {roast.userAvatars.length > 0 && (
               <div className="flex -space-x-2 mb-4">
@@ -122,14 +123,14 @@ Get your roast at: logkyakahenge.com
                     key={i}
                     src={avatar}
                     alt=""
-                    className="w-10 h-10 border-2 border-ink-black rounded-full object-cover bg-old-paper"
+                    className="w-10 h-10 border-2 border-bg-dark rounded-full object-cover bg-bg-card"
                   />
                 ))}
               </div>
             )}
 
             {/* Signature Line */}
-            <blockquote className="font-body text-lg text-charcoal italic mb-4">
+            <blockquote className="font-body text-lg text-text-secondary italic mb-4">
               "{roast.signatureLine}"
             </blockquote>
 
@@ -137,9 +138,9 @@ Get your roast at: logkyakahenge.com
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span>{persona.icon}</span>
-                <span className="font-headline font-bold text-sm">{persona.name}</span>
+                <span className="font-display font-bold text-sm text-text-primary">{persona.name}</span>
               </div>
-              <div className="stamp text-xs px-2 py-0.5">
+              <div className="px-3 py-1 text-xs font-display font-semibold uppercase rounded-full bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 text-accent-pink border border-accent-pink/30">
                 {roast.burnLevel}% BURN
               </div>
             </div>
@@ -151,7 +152,8 @@ Get your roast at: logkyakahenge.com
             {'share' in navigator && (
               <motion.button
                 onClick={handleNativeShare}
-                className="col-span-2 btn-brutal flex items-center justify-center gap-2"
+                className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-accent-pink rounded-xl font-display font-semibold text-white"
+                style={{ boxShadow: '0 0 30px rgba(255, 51, 102, 0.3)' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -163,7 +165,7 @@ Get your roast at: logkyakahenge.com
             {/* Twitter */}
             <motion.button
               onClick={handleTwitterShare}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1DA1F2] text-white border-3 border-ink-black font-headline font-bold shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1DA1F2] rounded-xl font-display font-semibold text-white"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -174,7 +176,7 @@ Get your roast at: logkyakahenge.com
             {/* LinkedIn */}
             <motion.button
               onClick={handleLinkedInShare}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#0A66C2] text-white border-3 border-ink-black font-headline font-bold shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#0A66C2] rounded-xl font-display font-semibold text-white"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -185,7 +187,7 @@ Get your roast at: logkyakahenge.com
             {/* WhatsApp */}
             <motion.button
               onClick={handleWhatsAppShare}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] text-white border-3 border-ink-black font-headline font-bold shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] rounded-xl font-display font-semibold text-white"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -196,7 +198,7 @@ Get your roast at: logkyakahenge.com
             {/* Download */}
             <motion.button
               onClick={handleDownload}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-charcoal text-old-paper border-3 border-ink-black font-headline font-bold shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-bg-glass border border-border rounded-xl font-display font-semibold text-text-primary hover:border-border-hover"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >

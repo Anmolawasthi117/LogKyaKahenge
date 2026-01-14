@@ -36,7 +36,7 @@ export function ResultPage() {
   };
 
   return (
-    <div className="min-h-screen bg-old-paper py-8 px-4 pb-24">
+    <div className="min-h-screen py-8 px-4 pb-24">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -46,7 +46,7 @@ export function ResultPage() {
         >
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 px-4 py-2 border-2 border-ink-black bg-old-paper shadow-[3px_3px_0px_#1A1A1A] hover:shadow-[1px_1px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-headline font-bold text-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-bg-glass border border-border rounded-lg hover:border-border-hover transition-all font-display font-semibold text-sm text-text-secondary hover:text-text-primary"
           >
             <ArrowLeft className="w-4 h-4" />
             Home
@@ -55,10 +55,10 @@ export function ResultPage() {
           <div className="flex items-center gap-3">
             <span className="text-4xl">{persona.icon}</span>
             <div className="text-right">
-              <h1 className="font-headline font-bold text-xl text-charcoal">
+              <h1 className="font-display font-bold text-xl text-text-primary">
                 {persona.name}
               </h1>
-              <p className="text-xs text-charcoal/60">{persona.vibe}</p>
+              <p className="text-xs text-text-muted">{persona.vibe}</p>
             </div>
           </div>
         </motion.div>
@@ -70,7 +70,10 @@ export function ResultPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="px-6 py-3 bg-flame-red text-white border-4 border-ink-black font-headline font-bold text-lg uppercase tracking-widest shadow-[4px_4px_0px_#1A1A1A]">
+          <div 
+            className="px-6 py-3 bg-accent-pink rounded-xl font-display font-bold text-lg uppercase tracking-widest text-white"
+            style={{ boxShadow: '0 0 40px rgba(255, 51, 102, 0.3)' }}
+          >
             🔥 You've Been Humbled 🔥
           </div>
         </motion.div>
@@ -90,12 +93,12 @@ export function ResultPage() {
           <div className="space-y-6">
             {/* Burn Meter */}
             <motion.div
-              className="card-brutal flex flex-col items-center p-6"
+              className="bg-bg-glass backdrop-blur-md border border-border rounded-2xl flex flex-col items-center p-6"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <h3 className="font-headline font-bold text-lg text-charcoal mb-4">
+              <h3 className="font-display font-bold text-lg text-text-primary mb-4">
                 🔥 Burn Level
               </h3>
               <BurnMeter progress={currentRoast.burnLevel} isAnimating={true} />
@@ -103,37 +106,39 @@ export function ResultPage() {
 
             {/* Cringe Score */}
             <motion.div
-              className="card-brutal p-6 text-center"
+              className="bg-bg-glass backdrop-blur-md border border-border rounded-2xl p-6 text-center"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <h3 className="font-headline font-bold text-sm text-charcoal/60 uppercase tracking-wider mb-2">
+              <h3 className="font-display font-bold text-sm text-text-muted uppercase tracking-wider mb-2">
                 Cringe Score
               </h3>
-              <div className="font-headline font-extrabold text-5xl text-flame-red mb-2">
+              <div 
+                className="font-display font-extrabold text-5xl text-accent-pink mb-2"
+              >
                 {cringeScore}/100
               </div>
-              <p className="text-xs text-charcoal/60 font-body">
+              <p className="text-xs text-text-muted font-body">
                 Based on {verifiedPlatforms.length} platform{verifiedPlatforms.length !== 1 ? 's' : ''} analyzed
               </p>
             </motion.div>
 
             {/* Platforms Used */}
             <motion.div
-              className="card-brutal p-6"
+              className="bg-bg-glass backdrop-blur-md border border-border rounded-2xl p-6"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <h3 className="font-headline font-bold text-sm text-charcoal/60 mb-3 uppercase tracking-wider">
+              <h3 className="font-display font-bold text-sm text-text-muted mb-3 uppercase tracking-wider">
                 Evidence Used Against You
               </h3>
               <div className="flex flex-wrap gap-2">
                 {verifiedPlatforms.map((platform) => (
                   <span
                     key={platform}
-                    className="px-3 py-1 bg-ink-black text-old-paper text-xs font-headline font-bold uppercase"
+                    className="px-3 py-1 bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 border border-accent-pink/30 text-text-primary text-xs font-display font-semibold uppercase rounded-lg"
                   >
                     {platform}
                   </span>
@@ -150,23 +155,28 @@ export function ResultPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <h3 className="font-headline font-bold text-xl text-charcoal text-center mb-6">
+          <h3 className="font-display font-bold text-xl text-text-primary text-center mb-6">
             How did we do? 🤔
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { id: 'true', icon: <ThumbsUp className="w-5 h-5" />, text: 'This is true 😭', color: 'bg-parrot-green' },
-              { id: 'personal', icon: <AlertTriangle className="w-5 h-5" />, text: 'Too personal 😬', color: 'bg-mustard' },
-              { id: 'love', icon: <Heart className="w-5 h-5" />, text: 'I loved it 🔥', color: 'bg-lotus-pink' },
+              { id: 'true', icon: <ThumbsUp className="w-5 h-5" />, text: 'This is true 😭', gradient: 'from-green-500 to-emerald-600' },
+              { id: 'personal', icon: <AlertTriangle className="w-5 h-5" />, text: 'Too personal 😬', gradient: 'from-yellow-500 to-orange-500' },
+              { id: 'love', icon: <Heart className="w-5 h-5" />, text: 'I loved it 🔥', gradient: 'from-pink-500 to-rose-600' },
             ].map((option) => (
               <motion.button
                 key={option.id}
                 onClick={() => handleFeedback(option.id)}
                 className={`
-                  flex items-center gap-2 px-6 py-3 border-3 border-ink-black font-headline font-bold
-                  shadow-[4px_4px_0px_#1A1A1A] hover:shadow-[2px_2px_0px_#1A1A1A] hover:translate-x-[2px] hover:translate-y-[2px] transition-all
-                  ${feedback === option.id ? option.color + ' text-ink-black' : 'bg-old-paper text-charcoal'}
+                  flex items-center gap-2 px-6 py-3 rounded-xl font-display font-semibold transition-all
+                  ${feedback === option.id 
+                    ? `bg-gradient-to-r ${option.gradient} text-white` 
+                    : 'bg-bg-glass border border-border text-text-secondary hover:border-border-hover'
+                  }
                 `}
+                style={{
+                  boxShadow: feedback === option.id ? '0 0 30px rgba(255, 51, 102, 0.3)' : 'none',
+                }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -186,8 +196,9 @@ export function ResultPage() {
         >
           <motion.button
             onClick={() => setShowShareCard(true)}
-            className="flex items-center gap-2 px-8 py-4 bg-saffron border-4 border-ink-black font-headline font-bold text-lg uppercase shadow-[6px_6px_0px_#1A1A1A] hover:shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
-            whileHover={{ scale: 1.02 }}
+            className="flex items-center gap-2 px-8 py-4 bg-accent-pink rounded-xl font-display font-bold text-lg text-white transition-all"
+            style={{ boxShadow: '0 0 40px rgba(255, 51, 102, 0.3)' }}
+            whileHover={{ scale: 1.02, boxShadow: '0 0 60px rgba(255, 51, 102, 0.4)' }}
             whileTap={{ scale: 0.98 }}
           >
             <Share2 className="w-5 h-5" />
@@ -196,7 +207,7 @@ export function ResultPage() {
 
           <motion.button
             onClick={handleRoastAgain}
-            className="flex items-center gap-2 px-8 py-4 bg-old-paper border-4 border-ink-black font-headline font-bold text-lg uppercase shadow-[6px_6px_0px_#1A1A1A] hover:shadow-[3px_3px_0px_#1A1A1A] hover:translate-x-[3px] hover:translate-y-[3px] transition-all"
+            className="flex items-center gap-2 px-8 py-4 bg-bg-glass border border-border rounded-xl font-display font-bold text-lg text-text-primary transition-all hover:border-border-hover"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
