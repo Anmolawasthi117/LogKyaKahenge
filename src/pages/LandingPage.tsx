@@ -1,22 +1,50 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Skull, Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Header } from '../components/Header';
 import { PERSONAS } from '../lib/constants';
 
 export function LandingPage() {
   const navigate = useNavigate();
-  const [humbledCount, setHumbledCount] = useState(42069);
+  const [humbledCount, setHumbledCount] = useState(100);
   const [isHovering, setIsHovering] = useState(false);
+  const [hasLoadedFromApi, setHasLoadedFromApi] = useState(false);
 
-  // Simulate real-time counter
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHumbledCount(prev => prev + Math.floor(Math.random() * 3) + 1);
-    }, 3000);
-    return () => clearInterval(interval);
+  // Fetch and increment view count from API
+  const fetchAndIncrementViews = useCallback(async () => {
+    try {
+      const response = await fetch('/api/views', {
+        method: 'POST',
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.count) {
+          setHumbledCount(data.count);
+          setHasLoadedFromApi(true);
+        }
+      }
+    } catch (error) {
+      console.log('View counter API not available, using local count');
+      // API not available (local dev without Redis), use animated fallback
+    }
   }, []);
+
+  useEffect(() => {
+    // Fetch real count on mount
+    fetchAndIncrementViews();
+  }, [fetchAndIncrementViews]);
+
+  // Animate count periodically for visual effect (only if API not loaded)
+  useEffect(() => {
+    if (hasLoadedFromApi) return; // Don't fake animate if we have real data
+    
+    const interval = setInterval(() => {
+      setHumbledCount(prev => prev + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [hasLoadedFromApi]);
 
   return (
     <div className="min-h-screen bg-bg-dark relative overflow-hidden">
