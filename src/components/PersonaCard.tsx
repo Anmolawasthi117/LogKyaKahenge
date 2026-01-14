@@ -77,13 +77,17 @@ export function PersonaCard({ persona, index }: PersonaCardProps) {
         {/* Icon & Title */}
         <div className="flex items-start gap-4 mb-4">
           <motion.div 
-            className={`w-14 h-14 rounded-xl ${accentColors[persona.id]} flex items-center justify-center text-3xl`}
+            className="w-14 h-14 rounded-xl overflow-hidden"
             animate={isSelected ? { 
               scale: [1, 1.1, 1],
             } : {}}
             transition={{ duration: 0.3 }}
           >
-            {persona.icon}
+            <img 
+              src={persona.avatar} 
+              alt={persona.name} 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
           
           <div className="flex-1 min-w-0">

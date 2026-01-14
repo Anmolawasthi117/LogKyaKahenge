@@ -134,7 +134,7 @@ ${persona?.id === 'desi-aunty' ? "Haaye beta, itna boring profile? Sharma ji ka 
         </button>
 
         <div className="flex items-center gap-3">
-          <span className="text-3xl">{persona.icon}</span>
+          <img src={persona.avatar} alt={persona.name} className="w-10 h-10 rounded-lg object-cover" />
           <div>
             <h1 className="font-headline font-bold text-xl text-charcoal">
               {persona.name}
@@ -170,7 +170,7 @@ ${persona?.id === 'desi-aunty' ? "Haaye beta, itna boring profile? Sharma ji ka 
                 key="roast"
                 text={roastText}
                 isStreaming={isStreaming}
-                personaIcon={persona.icon}
+                personaAvatar={persona.avatar}
               />
             )}
           </AnimatePresence>

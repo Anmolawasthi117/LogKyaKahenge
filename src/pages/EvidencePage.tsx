@@ -64,7 +64,7 @@ export function EvidencePage() {
             transition={{ delay: 0.2 }}
           >
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-bg-glass backdrop-blur-md border border-border rounded-xl">
-              <span className="text-2xl">{persona.icon}</span>
+              <img src={persona.avatar} alt={persona.name} className="w-8 h-8 rounded-lg object-cover" />
               <div>
                 <div className="font-display font-bold text-sm text-text-primary">Your Roaster</div>
                 <div className="text-xs text-text-muted">{persona.name}</div>

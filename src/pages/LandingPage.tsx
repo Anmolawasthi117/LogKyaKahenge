@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Skull, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
+import { PERSONAS } from '../lib/constants';
 
 export function LandingPage() {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ export function LandingPage() {
             </motion.button>
           </motion.div>
 
-          {/* Persona preview - more menacing */}
+          {/* Persona preview - with avatars */}
           <motion.div
             className="flex flex-wrap justify-center gap-3 mt-10 px-4"
             initial={{ opacity: 0 }}
@@ -124,19 +125,14 @@ export function LandingPage() {
             transition={{ delay: 0.9 }}
           >
             <p className="w-full text-xs text-text-muted uppercase tracking-wider mb-2">Your executioners await</p>
-            {[
-              { icon: '👨‍👦', label: 'Strict Dad' },
-              { icon: '👵', label: 'Nosy Aunty' },
-              { icon: '🧒', label: 'Gen Z' },
-              { icon: '🧠', label: 'Therapist' },
-            ].map((persona, i) => (
+            {PERSONAS.map((persona, i) => (
               <motion.div
                 key={i}
                 className="flex items-center gap-2 px-3 py-2 bg-bg-glass backdrop-blur-sm border border-border rounded-lg"
                 whileHover={{ scale: 1.05, borderColor: 'rgba(255, 51, 102, 0.3)' }}
               >
-                <span className="text-xl">{persona.icon}</span>
-                <span className="text-sm text-text-secondary hidden sm:inline">{persona.label}</span>
+                <img src={persona.avatar} alt={persona.name} className="w-7 h-7 rounded-md object-cover" />
+                <span className="text-sm text-text-secondary hidden sm:inline">{persona.name}</span>
               </motion.div>
             ))}
           </motion.div>

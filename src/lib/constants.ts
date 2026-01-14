@@ -1,42 +1,48 @@
 import type { PersonaInfo, PlatformInfo } from './types';
 
+// Import persona avatar images
+import tanaShahAvatar from '../assets/Tana shah.png';
+import pinkyAuntyAvatar from '../assets/Pinky aunty.png';
+import deluluDivyaAvatar from '../assets/Delulu Divya.png';
+import drDimagAvatar from '../assets/Dr. Dimag-Chatterjee.png';
+
 export const PERSONAS: PersonaInfo[] = [
     {
         id: 'khadoos-baap',
-        name: 'The Strict Dad',
-        nameHindi: 'Perpetually Disappointed',
+        name: 'Tana Shah',
+        nameHindi: 'The Strict Dad',
         description: 'The strict father who is perpetually disappointed. Every achievement is "not enough."',
-        icon: '👨‍👦',
+        avatar: tanaShahAvatar,
         color: '#8B4513',
         bgGradient: 'linear-gradient(135deg, #D2691E 0%, #8B4513 100%)',
         vibe: 'Stern, Disappointed, Old-School',
     },
     {
         id: 'desi-aunty',
-        name: 'The Nosy Aunty',
-        nameHindi: 'Neighborhood Gossip Queen',
+        name: 'Pinky Aunty',
+        nameHindi: 'The Nosy Aunty',
         description: 'The neighborhood gossip queen. Compares you to Sharma ji\'s son since 1995.',
-        icon: '👵',
+        avatar: pinkyAuntyAvatar,
         color: '#FF69B4',
         bgGradient: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%)',
         vibe: 'Judgmental, Nosy, Gold-obsessed',
     },
     {
         id: 'gen-z-kid',
-        name: 'The Gen Z Roaster',
-        nameHindi: 'Fluent in Brainrot',
+        name: 'Delulu Divya',
+        nameHindi: 'The Gen Z Roaster',
         description: 'Speaks fluent brainrot. Will call you "cheugy" and mean it as an insult.',
-        icon: '🧒',
+        avatar: deluluDivyaAvatar,
         color: '#00FF00',
         bgGradient: 'linear-gradient(135deg, #39FF14 0%, #00FF00 100%)',
         vibe: 'Unhinged, Slang-heavy, Chaotic',
     },
     {
         id: 'therapist',
-        name: 'Unpaid Therapist',
-        nameHindi: 'Payment Declined',
+        name: 'Dr. Dimag',
+        nameHindi: 'Unpaid Therapist',
         description: 'Professional coldness. Diagnoses your failures with clinical precision.',
-        icon: '🧠',
+        avatar: drDimagAvatar,
         color: '#4169E1',
         bgGradient: 'linear-gradient(135deg, #6495ED 0%, #4169E1 100%)',
         vibe: 'Cold, Clinical, Savage',

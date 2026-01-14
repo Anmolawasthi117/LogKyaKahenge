@@ -53,7 +53,7 @@ export function ResultPage() {
           </button>
 
           <div className="flex items-center gap-3">
-            <span className="text-4xl">{persona.icon}</span>
+            <img src={persona.avatar} alt={persona.name} className="w-12 h-12 rounded-lg object-cover" />
             <div className="text-right">
               <h1 className="font-display font-bold text-xl text-text-primary">
                 {persona.name}
@@ -85,7 +85,7 @@ export function ResultPage() {
             <RoastBox
               text={currentRoast.roastText}
               isStreaming={false}
-              personaIcon={persona.icon}
+              personaAvatar={persona.avatar}
             />
           </div>
 

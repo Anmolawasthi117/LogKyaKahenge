@@ -4,10 +4,10 @@ import { useEffect, useState, useRef } from 'react';
 interface RoastBoxProps {
   text: string;
   isStreaming?: boolean;
-  personaIcon?: string;
+  personaAvatar?: string;
 }
 
-export function RoastBox({ text, isStreaming = false, personaIcon = '🔥' }: RoastBoxProps) {
+export function RoastBox({ text, isStreaming = false, personaAvatar }: RoastBoxProps) {
   const [displayedText, setDisplayedText] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +51,11 @@ export function RoastBox({ text, isStreaming = false, personaIcon = '🔥' }: Ro
         {/* Header Bar */}
         <div className="bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 border-b border-border px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">{personaIcon}</span>
+            {personaAvatar ? (
+              <img src={personaAvatar} alt="Roaster" className="w-8 h-8 rounded-lg object-cover" />
+            ) : (
+              <span className="text-2xl">🔥</span>
+            )}
             <span className="font-display font-bold text-sm uppercase tracking-wider text-text-primary">
               Roast Certificate
             </span>

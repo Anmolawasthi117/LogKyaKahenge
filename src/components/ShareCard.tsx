@@ -104,7 +104,7 @@ Get your roast at: logkyakahenge.com
         {/* Header */}
         <div className="bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 border-b border-border px-6 py-5">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{persona.icon}</span>
+            <img src={persona.avatar} alt={persona.name} className="w-10 h-10 rounded-lg object-cover" />
             <div>
               <h2 className="font-display font-bold text-xl text-text-primary">Share Your Roast</h2>
               <p className="text-xs text-text-muted">Spread the humiliation</p>
@@ -137,7 +137,7 @@ Get your roast at: logkyakahenge.com
             {/* Persona Badge */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span>{persona.icon}</span>
+                <img src={persona.avatar} alt={persona.name} className="w-6 h-6 rounded object-cover" />
                 <span className="font-display font-bold text-sm text-text-primary">{persona.name}</span>
               </div>
               <div className="px-3 py-1 text-xs font-display font-semibold uppercase rounded-full bg-gradient-to-r from-accent-pink/20 to-accent-purple/20 text-accent-pink border border-accent-pink/30">

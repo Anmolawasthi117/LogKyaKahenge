@@ -7,7 +7,7 @@ export interface PersonaInfo {
     name: string;
     nameHindi: string;
     description: string;
-    icon: string;
+    avatar: string;
     color: string;
     bgGradient: string;
     vibe: string;

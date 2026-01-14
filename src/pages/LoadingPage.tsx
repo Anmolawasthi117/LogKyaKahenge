@@ -158,12 +158,12 @@ export function LoadingPage() {
             }}
           >
             <div 
-              className="inline-block text-8xl p-4"
+              className="inline-block p-4"
               style={{ 
                 filter: 'drop-shadow(0 0 30px rgba(255, 51, 102, 0.5))',
               }}
             >
-              {persona.icon}
+              <img src={persona.avatar} alt={persona.name} className="w-24 h-24 rounded-2xl object-cover" />
             </div>
           </motion.div>
         )}
