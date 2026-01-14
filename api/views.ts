@@ -1,15 +1,19 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// Support both Vercel KV and Upstash Redis
-const KV_REST_API_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const KV_REST_API_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+// Support both Vercel KV and Upstash Redis (must be REST API URLs starting with https://)
+const rawUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
+const rawToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
+
+// Validate that URL is actually an HTTPS REST API URL (not redis:// protocol)
+const isValidRestUrl = rawUrl.startsWith('https://');
+const KV_REST_API_URL = isValidRestUrl ? rawUrl : null;
+const KV_REST_API_TOKEN = isValidRestUrl ? rawToken : null;
 
 const VIEWS_KEY = 'site_views';
 const INITIAL_VIEWS = 100;
 
 async function kvCommand(command: string[]): Promise<any> {
     if (!KV_REST_API_URL || !KV_REST_API_TOKEN) {
-        console.warn('Redis credentials not configured. Need KV_REST_API_URL/KV_REST_API_TOKEN or UPSTASH_REDIS_REST_URL/UPSTASH_REDIS_REST_TOKEN');
         return null;
     }
 
@@ -24,8 +28,7 @@ async function kvCommand(command: string[]): Promise<any> {
         });
 
         if (!response.ok) {
-            const text = await response.text();
-            console.error('Redis API error:', response.status, text);
+            console.error('Redis API error:', response.status);
             return null;
         }
 
@@ -41,7 +44,6 @@ async function getViews(): Promise<number> {
     const result = await kvCommand(['GET', VIEWS_KEY]);
 
     if (result === null) {
-        // Key doesn't exist or error, initialize it
         await setViews(INITIAL_VIEWS);
         return INITIAL_VIEWS;
     }
@@ -54,20 +56,16 @@ async function setViews(count: number): Promise<void> {
 }
 
 async function incrementViews(): Promise<number> {
-    // First check if key exists
     const currentResult = await kvCommand(['GET', VIEWS_KEY]);
 
     if (currentResult === null) {
-        // Key doesn't exist, initialize with INITIAL_VIEWS + 1
         await setViews(INITIAL_VIEWS + 1);
         return INITIAL_VIEWS + 1;
     }
 
-    // Key exists, increment it
     const newValue = await kvCommand(['INCR', VIEWS_KEY]);
 
     if (newValue === null) {
-        // Fallback if INCR fails
         return parseInt(currentResult, 10) || INITIAL_VIEWS;
     }
 
@@ -78,7 +76,6 @@ export default async function handler(
     req: VercelRequest,
     res: VercelResponse
 ) {
-    // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -87,19 +84,16 @@ export default async function handler(
         return res.status(200).end();
     }
 
-    // Check if credentials are configured
+    // If no valid REST API configured, return default count
     if (!KV_REST_API_URL || !KV_REST_API_TOKEN) {
-        console.warn('Redis not configured, returning default count');
         return res.status(200).json({ count: INITIAL_VIEWS, configured: false });
     }
 
     try {
         if (req.method === 'POST') {
-            // Increment and return new count
             const count = await incrementViews();
             return res.status(200).json({ count, configured: true });
         } else {
-            // GET - just return current count
             const count = await getViews();
             return res.status(200).json({ count, configured: true });
         }
