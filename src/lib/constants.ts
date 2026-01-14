@@ -39,7 +39,7 @@ export const PERSONAS: PersonaInfo[] = [
     },
     {
         id: 'therapist',
-        name: 'Dr. Dimag',
+        name: 'Dr. Dimag Chatterjee',
         nameHindi: 'Unpaid Therapist',
         description: 'Professional coldness. Diagnoses your failures with clinical precision.',
         avatar: drDimagAvatar,

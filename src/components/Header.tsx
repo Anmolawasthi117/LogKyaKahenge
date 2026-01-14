@@ -43,7 +43,7 @@ export function Header() {
         {/* Nav Actions */}
         <div className="flex items-center gap-3">
           <motion.a
-            href="https://github.com"
+            href="https://github.com/Anmolawasthi117"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2.5 bg-bg-glass border border-border rounded-lg hover:border-border-hover transition-all"

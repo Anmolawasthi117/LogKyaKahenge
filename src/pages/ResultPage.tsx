@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Share2, RefreshCw, ThumbsUp, Heart, AlertTriangle } from 'lucide-react';
-import { RoastBox } from '../components/RoastBox';
+import { RoastBubbles } from '../components/RoastBubbles';
 import { BurnMeter } from '../components/BurnMeter';
 import { ShareCard } from '../components/ShareCard';
 import { useAppStore } from '../store/useAppStore';
@@ -53,12 +53,12 @@ export function ResultPage() {
           </button>
 
           <div className="flex items-center gap-3">
-            <img src={persona.avatar} alt={persona.name} className="w-12 h-12 rounded-lg object-cover" />
+            <img src={persona.avatar} alt={persona.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-accent-pink/30" />
             <div className="text-right">
               <h1 className="font-display font-bold text-xl text-text-primary">
                 {persona.name}
               </h1>
-              <p className="text-xs text-text-muted">{persona.vibe}</p>
+              <p className="text-xs text-text-muted">{persona.nameHindi}</p>
             </div>
           </div>
         </motion.div>
@@ -80,13 +80,21 @@ export function ResultPage() {
 
         {/* Main Content */}
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Roast Box */}
+          {/* Roast Bubbles */}
           <div className="lg:col-span-2">
-            <RoastBox
-              text={currentRoast.roastText}
-              isStreaming={false}
-              personaAvatar={persona.avatar}
-            />
+            <motion.div
+              className="bg-bg-glass/50 backdrop-blur-xl border border-border rounded-2xl p-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <RoastBubbles
+                text={currentRoast.roastText}
+                personaAvatar={persona.avatar}
+                personaName={persona.name}
+                isStreaming={false}
+              />
+            </motion.div>
           </div>
 
           {/* Sidebar */}
