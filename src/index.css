@@ -1,0 +1,323 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ============================================
+   LOGKYAKAHENGE - BRUTALIST THEME
+   Indian Pop-Art Aesthetic with Desi Vibes
+   ============================================ */
+
+@theme {
+  /* Colors - Brutalist Indian Palette */
+  --color-old-paper: #FCF9F0;
+  --color-old-paper-dark: #F5F0E1;
+  --color-saffron: #FF4D00;
+  --color-saffron-dark: #E64500;
+  --color-saffron-light: #FF6D33;
+  --color-charcoal: #2D3436;
+  --color-charcoal-light: #4A4E50;
+  --color-ink-black: #1A1A1A;
+  --color-flame-red: #D63031;
+  --color-mustard: #FDCB6E;
+  --color-peacock-blue: #0984E3;
+  --color-peacock-dark: #0770C0;
+  --color-lotus-pink: #FD79A8;
+  --color-parrot-green: #00B894;
+  --color-cream: #FFEAA7;
+  --color-shadow: rgba(0, 0, 0, 0.9);
+
+  /* Fonts - Bold & Expressive */
+  --font-headline: 'Syne', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  /* Brutalist Shadows */
+  --shadow-brutal: 4px 4px 0px var(--color-ink-black);
+  --shadow-brutal-sm: 2px 2px 0px var(--color-ink-black);
+  --shadow-brutal-lg: 6px 6px 0px var(--color-ink-black);
+  --shadow-brutal-xl: 8px 8px 0px var(--color-ink-black);
+  --shadow-brutal-saffron: 4px 4px 0px var(--color-saffron);
+
+  /* Border Radius - Chunky */
+  --radius-brutal: 0px;
+  --radius-sm: 4px;
+
+  /* Transitions */
+  --transition-brutal: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-old-paper);
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headline Font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Brutalist Button Base */
+.btn-brutal {
+  font-family: var(--font-headline);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.875rem 1.5rem;
+  border: 3px solid var(--color-ink-black);
+  background-color: var(--color-saffron);
+  color: var(--color-ink-black);
+  box-shadow: var(--shadow-brutal);
+  transition: var(--transition-brutal);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-brutal:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--color-ink-black);
+}
+
+.btn-brutal:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--color-ink-black);
+}
+
+/* Secondary Button */
+.btn-brutal-secondary {
+  background-color: var(--color-old-paper);
+  color: var(--color-charcoal);
+}
+
+/* Ghost Button */
+.btn-brutal-ghost {
+  background-color: transparent;
+  color: var(--color-charcoal);
+}
+
+/* Card Brutalist */
+.card-brutal {
+  background-color: var(--color-old-paper);
+  border: 3px solid var(--color-ink-black);
+  box-shadow: var(--shadow-brutal);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.card-brutal::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-saffron);
+  border: 2px solid var(--color-ink-black);
+}
+
+/* Input Brutalist */
+.input-brutal {
+  font-family: var(--font-body);
+  padding: 0.875rem 1rem;
+  border: 3px solid var(--color-ink-black);
+  background-color: white;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: var(--transition-brutal);
+  width: 100%;
+}
+
+.input-brutal:focus {
+  outline: none;
+  box-shadow: var(--shadow-brutal);
+  border-color: var(--color-saffron);
+}
+
+/* Newspaper Text Effect */
+.newspaper-text {
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 1.5em,
+      rgba(0, 0, 0, 0.03) 1.5em,
+      rgba(0, 0, 0, 0.03) 3em);
+}
+
+/* Crumpled Paper Effect */
+.crumpled-paper {
+  background-color: var(--color-old-paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-blend-mode: multiply;
+  background-size: 100px 100px;
+}
+
+/* Tape Effect for decorations */
+.tape {
+  background-color: rgba(253, 203, 110, 0.8);
+  transform: rotate(-2deg);
+  padding: 0.25rem 1rem;
+  display: inline-block;
+}
+
+/* Stamp Effect */
+.stamp {
+  border: 4px double var(--color-flame-red);
+  border-radius: 50%;
+  padding: 1rem;
+  transform: rotate(-12deg);
+  color: var(--color-flame-red);
+  font-family: var(--font-headline);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Ticker Animation */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+/* Typewriter Cursor */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Burn Meter Glow */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px var(--color-saffron));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px var(--color-flame-red));
+  }
+}
+
+.burn-glow {
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+/* Shake Animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Torn Edge Effect */
+.torn-edge {
+  clip-path: polygon(0 0,
+      5% 2%, 10% 0, 15% 3%, 20% 0, 25% 2%, 30% 0, 35% 1%, 40% 0, 45% 2%,
+      50% 0, 55% 3%, 60% 0, 65% 2%, 70% 0, 75% 1%, 80% 0, 85% 2%, 90% 0, 95% 3%,
+      100% 0, 100% 100%,
+      95% 98%, 90% 100%, 85% 97%, 80% 100%, 75% 99%, 70% 100%, 65% 98%, 60% 100%, 55% 97%,
+      50% 100%, 45% 98%, 40% 100%, 35% 99%, 30% 100%, 25% 97%, 20% 100%, 15% 98%, 10% 100%, 5% 99%,
+      0 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-old-paper-dark);
+  border: 2px solid var(--color-ink-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-charcoal);
+  border: 2px solid var(--color-ink-black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-saffron);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-saffron);
+  color: var(--color-ink-black);
+}
+
+/* Utility Classes */
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.text-saffron {
+  color: var(--color-saffron);
+}
+
+.bg-saffron {
+  background-color: var(--color-saffron);
+}
+
+.text-charcoal {
+  color: var(--color-charcoal);
+}
+
+.bg-old-paper {
+  background-color: var(--color-old-paper);
+}
+
+.border-ink {
+  border-color: var(--color-ink-black);
+}
