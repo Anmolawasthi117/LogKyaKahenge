@@ -76,8 +76,7 @@ export const PLATFORMS: PlatformInfo[] = [
         name: 'Spotify',
         icon: '🎵',
         color: '#1DB954',
-        placeholder: 'Coming Soon',
-        comingSoon: true,
+        placeholder: 'Connect your Spotify',
     },
     {
         id: 'reddit',

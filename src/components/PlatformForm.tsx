@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Loader2, AlertCircle, X } from 'lucide-react';
+import { Check, Loader2, AlertCircle, X, Music } from 'lucide-react';
 import { PLATFORMS } from '../lib/constants';
 import type { Platform } from '../lib/types';
 import { useAppStore } from '../store/useAppStore';
@@ -8,6 +8,7 @@ import { fetchGitHubData } from '../lib/scrapers/github';
 import { fetchChessData } from '../lib/scrapers/chess';
 import { fetchLeetCodeData } from '../lib/scrapers/leetcode';
 import { fetchRedditData } from '../lib/scrapers/reddit';
+import { initiateSpotifyLogin } from '../lib/scrapers/spotify';
 
 interface PlatformInputProps {
   platformId: Platform;
@@ -59,6 +60,8 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
           result = await fetchRedditData(username);
           break;
         case 'spotify':
+          // Spotify uses OAuth, handled separately
+          return;
         case 'behance':
           // Mock verification for now
           await new Promise(resolve => setTimeout(resolve, 1000));
@@ -164,8 +167,51 @@ function PlatformInput({ platformId, isEnabled, onToggle }: PlatformInputProps) 
         </AnimatePresence>
       </div>
 
-      {/* Input Section */}
-      {isEnabled && !platform.comingSoon && (
+      {/* Input Section — Spotify uses OAuth button, others use text input */}
+      {isEnabled && !platform.comingSoon && platformId === 'spotify' && !isVerified && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+        >
+          <motion.button
+            onClick={() => initiateSpotifyLogin()}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg text-sm font-display font-bold text-white transition-all"
+            style={{
+              background: 'linear-gradient(135deg, #1DB954 0%, #1ed760 100%)',
+              boxShadow: '0 0 25px rgba(29, 185, 84, 0.3)',
+            }}
+            whileHover={{ scale: 1.02, boxShadow: '0 0 35px rgba(29, 185, 84, 0.5)' }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Music className="w-5 h-5" />
+            🎵 Connect Spotify
+          </motion.button>
+        </motion.div>
+      )}
+
+      {/* Spotify disconnect button when verified */}
+      {isEnabled && platformId === 'spotify' && isVerified && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          className="flex items-center gap-2"
+        >
+          <div className="flex-1 px-4 py-3 rounded-lg text-sm font-body bg-accent-green/10 border border-accent-green/30 text-accent-green">
+            ✅ Spotify Connected
+          </div>
+          <button
+            onClick={handleClear}
+            className="p-3 hover:bg-red-500/20 rounded-lg transition-colors"
+          >
+            <X className="w-4 h-4 text-text-muted" />
+          </button>
+        </motion.div>
+      )}
+
+      {/* Standard text input for non-Spotify platforms */}
+      {isEnabled && !platform.comingSoon && platformId !== 'spotify' && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}

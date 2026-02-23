@@ -66,6 +66,9 @@ export interface SpotifyData {
     topArtists: string[];
     topTracks: string[];
     totalPlaylists: number;
+    playlistNames: string[];
+    recentlyPlayed: string[];
+    topGenres: string[];
 }
 
 export interface RedditData {
